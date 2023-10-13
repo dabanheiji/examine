@@ -6,6 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { QuestionModule } from './question/question.module';
+import { Question } from './question/entities/question.entity';
+import { Answer } from './question/entities/answer.entity';
 
 @Module({
   imports: [
@@ -37,7 +40,7 @@ import { JwtModule } from '@nestjs/jwt';
           synchronize: true,
           logging: true,
           poolSize: 10,
-          entities: [User],
+          entities: [User, Question, Answer],
           connectorPackage: 'mysql2',
           extra: {
             authPlugin: 'sha256_password',
@@ -47,6 +50,7 @@ import { JwtModule } from '@nestjs/jwt';
       inject: [ConfigService],
     }),
     UserModule,
+    QuestionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

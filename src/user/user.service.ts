@@ -5,6 +5,8 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToClass } from 'class-transformer';
 import { LoginUserDto } from './dto/login-user.dto';
+import { md5 } from 'src/utils';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UserService {
@@ -21,6 +23,7 @@ export class UserService {
     }
 
     const user = plainToClass(User, registerUserDto);
+    user.password = md5(registerUserDto.password);
 
     try {
       await this.userRepository.save(user);
@@ -39,7 +42,7 @@ export class UserService {
       throw new HttpException('用户不存在', HttpStatus.BAD_REQUEST);
     }
 
-    if (foundUser.password !== loginUserDto.password) {
+    if (foundUser.password !== md5(loginUserDto.password)) {
       throw new HttpException('密码错误', HttpStatus.BAD_REQUEST);
     }
 
@@ -49,5 +52,26 @@ export class UserService {
   async findOneUserById(userId: number) {
     const user = await this.userRepository.findOneBy({ id: userId });
     return user;
+  }
+
+  async updatePassword(updatePasswordDto: UpdatePasswordDto) {
+    const user = await this.userRepository.findOneBy({
+      username: updatePasswordDto.username,
+    });
+
+    if (!user) {
+      throw new HttpException('用户不存在', HttpStatus.BAD_REQUEST);
+    }
+
+    user.password = updatePasswordDto.password;
+
+    try {
+      await this.userRepository.update(user, {
+        username: updatePasswordDto.username,
+      });
+      return '修改成功';
+    } catch (error) {
+      return '修改失败';
+    }
   }
 }

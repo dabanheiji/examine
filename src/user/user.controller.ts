@@ -2,11 +2,11 @@ import {
   Body,
   Controller,
   Get,
-  HttpException,
   HttpStatus,
   Inject,
   Post,
   Query,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
@@ -15,6 +15,8 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { LoginUserVo } from './vo/login-user.vo';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { UpdatePasswordDto } from './dto/update-password.dto';
+import { UserInfoVo } from './vo/user-info.vo';
 
 @ApiTags('用户管理模块')
 @Controller('user')
@@ -106,7 +108,31 @@ export class UserController {
 
       return vo;
     } catch (error) {
-      throw new HttpException('token 已到期', HttpStatus.BAD_REQUEST);
+      throw new UnauthorizedException('token 已失效');
     }
+  }
+
+  @ApiBody({
+    type: UpdatePasswordDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: '修改成功/失败',
+    type: String,
+  })
+  @Post('update-password')
+  async updatePassword(updatePassword: UpdatePasswordDto) {
+    return await this.userService.updatePassword(updatePassword);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: UserInfoVo,
+    description: '用户信息',
+  })
+  @Get('info')
+  async info() {
+    const vo = new UserInfoVo();
+    return vo;
   }
 }
