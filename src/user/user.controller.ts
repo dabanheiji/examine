@@ -10,7 +10,13 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterUserDto } from './dto/register-user.dto';
-import { ApiBody, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { LoginUserDto } from './dto/login-user.dto';
 import { LoginUserVo } from './vo/login-user.vo';
 import { JwtService } from '@nestjs/jwt';
@@ -29,6 +35,7 @@ export class UserController {
   @Inject(ConfigService)
   private configService: ConfigService;
 
+  @ApiOperation({ summary: '注册' })
   @ApiBody({ type: RegisterUserDto })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -40,6 +47,7 @@ export class UserController {
     return await this.userService.register(registerUserDto);
   }
 
+  @ApiOperation({ summary: '登录' })
   @ApiBody({ type: LoginUserDto })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -70,6 +78,7 @@ export class UserController {
     return vo;
   }
 
+  @ApiOperation({ summary: '刷新token' })
   @ApiQuery({
     name: 'refreshToken',
     type: String,
@@ -112,6 +121,7 @@ export class UserController {
     }
   }
 
+  @ApiOperation({ summary: '修改密码' })
   @ApiBody({
     type: UpdatePasswordDto,
   })
@@ -125,6 +135,7 @@ export class UserController {
     return await this.userService.updatePassword(updatePassword);
   }
 
+  @ApiOperation({ summary: '获取用户信息' })
   @ApiResponse({
     status: HttpStatus.OK,
     type: UserInfoVo,

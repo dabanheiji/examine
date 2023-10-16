@@ -1,18 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { TypeEnum } from '../../enum';
 
-export class AnswerDto {
+class QuestionVo {
   @ApiProperty()
-  id?: number;
+  id: number;
 
-  @ApiProperty()
-  context: string;
-
-  @ApiProperty()
-  isRight: boolean;
-}
-
-export class CreateQuestionDto {
   @ApiProperty()
   context: string;
 
@@ -20,13 +12,18 @@ export class CreateQuestionDto {
   type: TypeEnum;
 
   @ApiProperty()
-  categorys: number[];
+  createTime: Date;
 
   @ApiProperty()
-  image?: string;
+  updateTime: Date;
+}
 
+export class QuestionListVo {
   @ApiProperty({
-    type: [AnswerDto],
+    type: [QuestionVo],
   })
-  answers: AnswerDto[];
+  list: QuestionVo[];
+
+  @ApiProperty()
+  total: number;
 }

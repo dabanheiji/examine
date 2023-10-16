@@ -9,6 +9,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { QuestionModule } from './question/question.module';
 import { Question } from './question/entities/question.entity';
 import { Answer } from './question/entities/answer.entity';
+import { Category } from './question/entities/category.entity';
+import { TestPaperModule } from './test_paper/test_paper.module';
+import { TestPaper } from './test_paper/entities/test_paper.entity';
 
 @Module({
   imports: [
@@ -40,7 +43,7 @@ import { Answer } from './question/entities/answer.entity';
           synchronize: true,
           logging: true,
           poolSize: 10,
-          entities: [User, Question, Answer],
+          entities: [User, Question, Answer, Category, TestPaper],
           connectorPackage: 'mysql2',
           extra: {
             authPlugin: 'sha256_password',
@@ -51,6 +54,7 @@ import { Answer } from './question/entities/answer.entity';
     }),
     UserModule,
     QuestionModule,
+    TestPaperModule,
   ],
   controllers: [AppController],
   providers: [AppService],
