@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TypeEnum } from '../../enum';
+import { QuestionTypeEnum } from '../../enum';
 
 export class AnswerDto {
   @ApiProperty()
@@ -17,7 +17,7 @@ export class CreateQuestionDto {
   context: string;
 
   @ApiProperty()
-  type: TypeEnum;
+  type: QuestionTypeEnum;
 
   @ApiProperty()
   categorys: number[];

@@ -19,7 +19,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { TypeEnum } from '../enum';
+import { QuestionTypeEnum } from '../enum';
 import { Type } from 'class-transformer';
 import { QuestionListVo } from './vo/question-list.vo';
 import { QuestionInfoVo } from './vo/question-info.vo';
@@ -69,7 +69,7 @@ export class QuestionController {
   @ApiQuery({
     name: 'type',
     description: '题目类型',
-    enum: TypeEnum,
+    enum: QuestionTypeEnum,
     required: false,
   })
   @ApiQuery({
@@ -87,7 +87,7 @@ export class QuestionController {
     @Query('pageNo') pageNo: number,
     @Query('pageSize') pageSize: number,
     @Query('context') context: string,
-    @Query('type') type: TypeEnum,
+    @Query('type') type: QuestionTypeEnum,
     @Query('category') category: string,
   ) {
     return await this.questionService.findAll(

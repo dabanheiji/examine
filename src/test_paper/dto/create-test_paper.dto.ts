@@ -5,10 +5,22 @@ export class CreateTestPaperDto {
   name: string;
 
   @ApiProperty()
+  desc?: string;
+
+  @ApiProperty()
+  radioCount: number;
+
+  @ApiProperty()
   radioRank: number;
 
   @ApiProperty()
+  checkboxCount: number;
+
+  @ApiProperty()
   checkboxRank: number;
+
+  @ApiProperty()
+  determineCount: number;
 
   @ApiProperty()
   determineRank: number;

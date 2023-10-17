@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { Answer } from './answer.entity';
 
-import { TypeEnum } from '../../enum';
+import { QuestionTypeEnum } from '../../enum';
 import { Category } from './category.entity';
 import { TestPaper } from '../../test_paper/entities/test_paper.entity';
 
@@ -30,9 +30,9 @@ export class Question {
   @Column({
     comment: '类型',
     type: 'enum',
-    enum: TypeEnum,
+    enum: QuestionTypeEnum,
   })
-  type: TypeEnum;
+  type: QuestionTypeEnum;
 
   @Column({
     comment: '图片',

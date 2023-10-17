@@ -5,7 +5,7 @@ import { In, Like, Repository } from 'typeorm';
 import { Question } from './entities/question.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Answer } from './entities/answer.entity';
-import { TypeEnum } from '../enum';
+import { QuestionTypeEnum } from '../enum';
 import { QuestionListVo } from './vo/question-list.vo';
 import { Category } from './entities/category.entity';
 import { QuestionInfoVo } from './vo/question-info.vo';
@@ -61,7 +61,7 @@ export class QuestionService {
     pageNo: number,
     pageSize: number,
     context?: string,
-    type?: TypeEnum,
+    type?: QuestionTypeEnum,
     category?: string,
   ) {
     const skipCount = (pageNo - 1) * pageSize;
@@ -218,6 +218,14 @@ export class QuestionService {
     } catch (error) {
       throw new HttpException('删除失败', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async findQuestionsInIds(questionIds: number[]) {
+    return await this.questionRepository.find({
+      where: {
+        id: In(questionIds),
+      },
+    });
   }
 
   async addQuestionOnPaper(testPaper: TestPaper, questionIds: number[]) {

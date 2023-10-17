@@ -13,6 +13,7 @@ import { CreateTestPaperDto } from './dto/create-test_paper.dto';
 import { UpdateTestPaperDto } from './dto/update-test_paper.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TestPaperVo } from './vo/test-paper.vo';
+import { TestPaperDetailVo } from './vo/test-paper-detail.vo';
 
 @ApiTags('试卷模块')
 @Controller('test-paper')
@@ -36,21 +37,21 @@ export class TestPaperController {
     return await this.testPaperService.findAll(pageNo, pageSize, name);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.testPaperService.findOne(+id);
+  @ApiResponse({
+    type: TestPaperDetailVo,
+  })
+  @Get('detail')
+  async findOne(@Query('id') id: string) {
+    return await this.testPaperService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTestPaperDto: UpdateTestPaperDto,
-  ) {
-    return this.testPaperService.update(+id, updateTestPaperDto);
+  @Post('update')
+  async update(@Body() updateTestPaperDto: UpdateTestPaperDto) {
+    return await this.testPaperService.update(updateTestPaperDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.testPaperService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.testPaperService.remove(+id);
   }
 }

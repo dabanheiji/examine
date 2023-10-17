@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { TypeEnum } from '../../enum';
+import { QuestionTypeEnum } from '../../enum';
 
 class QuestionVo {
   @ApiProperty()
@@ -9,7 +9,7 @@ class QuestionVo {
   context: string;
 
   @ApiProperty()
-  type: TypeEnum;
+  type: QuestionTypeEnum;
 
   @ApiProperty()
   createTime: Date;
