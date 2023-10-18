@@ -4,23 +4,23 @@ import { UpdateDeptDto } from './dto/update-dept.dto';
 
 @Injectable()
 export class DeptService {
-  create(createDeptDto: CreateDeptDto) {
+  async create(createDeptDto: CreateDeptDto) {
     return 'This action adds a new dept';
   }
 
-  findAll() {
+  async findAll() {
     return `This action returns all dept`;
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return `This action returns a #${id} dept`;
   }
 
-  update(id: number, updateDeptDto: UpdateDeptDto) {
+  async update(id: number, updateDeptDto: UpdateDeptDto) {
     return `This action updates a #${id} dept`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} dept`;
   }
 }
