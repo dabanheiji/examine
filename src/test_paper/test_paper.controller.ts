@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
@@ -11,7 +10,7 @@ import {
 import { TestPaperService } from './test_paper.service';
 import { CreateTestPaperDto } from './dto/create-test_paper.dto';
 import { UpdateTestPaperDto } from './dto/update-test_paper.dto';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { TestPaperVo } from './vo/test-paper.vo';
 import { TestPaperDetailVo } from './vo/test-paper-detail.vo';
 
@@ -20,6 +19,12 @@ import { TestPaperDetailVo } from './vo/test-paper-detail.vo';
 export class TestPaperController {
   constructor(private readonly testPaperService: TestPaperService) {}
 
+  @ApiBody({
+    type: CreateTestPaperDto,
+  })
+  @ApiResponse({
+    type: String,
+  })
   @Post('create')
   async create(@Body() createTestPaperDto: CreateTestPaperDto) {
     return await this.testPaperService.create(createTestPaperDto);

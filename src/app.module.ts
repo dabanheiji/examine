@@ -12,6 +12,8 @@ import { Answer } from './question/entities/answer.entity';
 import { Category } from './question/entities/category.entity';
 import { TestPaperModule } from './test_paper/test_paper.module';
 import { TestPaper } from './test_paper/entities/test_paper.entity';
+import { TestPlanModule } from './test_plan/test_plan.module';
+import { DeptModule } from './dept/dept.module';
 
 @Module({
   imports: [
@@ -55,6 +57,8 @@ import { TestPaper } from './test_paper/entities/test_paper.entity';
     UserModule,
     QuestionModule,
     TestPaperModule,
+    TestPlanModule,
+    DeptModule,
   ],
   controllers: [AppController],
   providers: [AppService],
