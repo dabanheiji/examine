@@ -27,23 +27,27 @@ export class DeptController {
     return await this.deptService.create(createDeptDto);
   }
 
-  @Get()
-  findAll() {
-    return this.deptService.findAll();
+  @ApiResponse({
+    type: String,
+  })
+  @Get('tree')
+  async findAll() {
+    return await this.deptService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.deptService.findOne(+id);
+  @ApiResponse({
+    type: String,
+  })
+  @Patch('update')
+  async update(@Body() updateDeptDto: UpdateDeptDto) {
+    return await this.deptService.update(updateDeptDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDeptDto: UpdateDeptDto) {
-    return this.deptService.update(+id, updateDeptDto);
-  }
-
+  @ApiResponse({
+    type: String,
+  })
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.deptService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.deptService.remove(+id);
   }
 }

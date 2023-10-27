@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDeptDto } from './dto/create-dept.dto';
 import { UpdateDeptDto } from './dto/update-dept.dto';
+import { Repository } from 'typeorm';
+import { Dept } from './entities/dept.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DeptService {
+  @InjectRepository(Dept)
+  private deptRepository: Repository<Dept>;
+
   async create(createDeptDto: CreateDeptDto) {
-    return 'This action adds a new dept';
+    const dept = new Dept();
+    dept.name = createDeptDto.name;
+    return await this.deptRepository.save(dept);
   }
 
   async findAll() {
-    return `This action returns all dept`;
+    return await this.deptRepository.find({
+      relations: {
+        children: true,
+      },
+    });
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} dept`;
-  }
-
-  async update(id: number, updateDeptDto: UpdateDeptDto) {
-    return `This action updates a #${id} dept`;
+  async update(updateDeptDto: UpdateDeptDto) {
+    return await this.deptRepository.update(updateDeptDto.id, updateDeptDto);
   }
 
   async remove(id: number) {
-    return `This action removes a #${id} dept`;
+    return await this.deptRepository.delete(id);
   }
 }

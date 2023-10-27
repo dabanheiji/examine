@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Question } from '../../question/entities/question.entity';
 import { PaperTypeEnum } from 'src/enum';
+import { TestPlan } from 'src/test_plan/entities/test_plan.entity';
 
 @Entity({
   name: 'test_papers',
@@ -86,4 +88,7 @@ export class TestPaper {
 
   @ManyToMany(() => Question, (question) => question.papers)
   questions: Question[];
+
+  @OneToMany(() => TestPlan, (testPlan) => testPlan.paper)
+  testPlans: TestPlan[];
 }
