@@ -1,7 +1,13 @@
 import { Dept } from 'src/dept/entities/dept.entity';
 import { TestPaper } from 'src/test_paper/entities/test_paper.entity';
 import { User } from 'src/user/entities/user.entity';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class TestPlan {
@@ -13,10 +19,16 @@ export class TestPlan {
 
   @Column()
   desc: string;
-  paper: TestPaper;
+
+  @Column()
   passMark: number;
+
+  @CreateDateColumn()
   createTime: Date;
   updateTime: Date;
+
+  @ManyToOne(() => TestPaper, (testPaper) => testPaper.testPlans)
+  paper: TestPaper;
   createBy: User;
   updateBy: User;
   depts: Dept[];
